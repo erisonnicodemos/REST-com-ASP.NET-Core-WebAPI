@@ -39,6 +39,6 @@ namespace DevIO.App.ViewModels
 
         [ScaffoldColumn(false)]
         public string NomeFornecedor { get; set; }
-
+        public IEnumerable<FornecedorViewModel> Fornecedores { get; internal set; }
     }
 }
