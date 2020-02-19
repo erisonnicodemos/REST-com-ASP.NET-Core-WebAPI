@@ -27,23 +27,11 @@ namespace DevIO.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Development",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            services.AddIdentityConfiguration(Configuration);
 
             services.ResolveDependencies();
+
+            services.WebApiConfig();
 
         }
 
@@ -58,9 +46,9 @@ namespace DevIO.Api
                 app.UseHsts();
             }
 
-            app.UseCors("Development");
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseAuthentication();
+            app.UseMvcConfiguration();
+
         }
     }
 }
